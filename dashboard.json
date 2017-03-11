@@ -1,0 +1,3573 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUX",
+      "label": "influx",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "4.1.2"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "hideControls": false,
+  "id": null,
+  "links": [],
+  "refresh": false,
+  "rows": [
+    {
+      "collapse": false,
+      "height": "135px",
+      "panels": [
+        {
+          "content": "<img src=\"http://10.5.10.16/assets/ubnt.png\" height=\"60\"  />\n",
+          "editable": true,
+          "error": false,
+          "height": "",
+          "id": 1,
+          "links": [],
+          "minSpan": 2,
+          "mode": "html",
+          "span": 2,
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "content": "Ubiquiti - EdgeRouter Lite<br>\nLAN: 10.5.5.1/30<br>\nWAN: <br />\nDMZ: 172.16.254.0/24<br />\nVPN: 10.5.98.1/32<br />\n\n",
+          "editable": true,
+          "error": false,
+          "height": "",
+          "id": 2,
+          "links": [],
+          "minSpan": 2,
+          "mode": "html",
+          "span": 2,
+          "title": "",
+          "transparent": true,
+          "type": "text"
+        },
+        {
+          "aliasColors": {
+            "Mid": "#E5A8E2",
+            "Short": "#0A437C"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "height": "",
+          "id": 4,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 4,
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Short",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_longterm",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "load"
+                }
+              ]
+            },
+            {
+              "alias": "Mid",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_midterm",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.load-system.mediumterm\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "load"
+                }
+              ]
+            },
+            {
+              "alias": "Long",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_longterm",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.load-system.longterm\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "load"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Load",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "percent",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Buffer": "#64B0C8",
+            "Cached": "#E5A8E2",
+            "Free": "#447EBC",
+            "servers.router-edge01_home.snmp.memory-buffer.mean": "#70DBED",
+            "servers.router-edge01_home.snmp.memory-cached.mean": "#E5A8E2",
+            "servers.router-edge01_home.snmp.memory-free.mean": "#1F78C1"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "height": "",
+          "id": 5,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Free",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_value",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.memory-free\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "memory"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "free"
+                }
+              ]
+            },
+            {
+              "alias": "Buffer",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_value",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.memory-buffer\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "memory"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "buffer"
+                }
+              ]
+            },
+            {
+              "alias": "Cached",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_value",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.memory-cached\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "memory"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "cached"
+                }
+              ]
+            },
+            {
+              "alias": "Total",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_value",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.memory-cached\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "memory"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "total"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Memory",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "kbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 66,
+      "panels": [
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "${DS_INFLUX}",
+          "decimals": 0,
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "40px",
+          "id": 8,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 3,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_value",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.gauge-eth1\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "gauge"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth0"
+                }
+              ]
+            }
+          ],
+          "thresholds": "0,1",
+          "title": "ETH0 - LAN",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "UP",
+              "value": "1"
+            },
+            {
+              "op": "=",
+              "text": "DOWN",
+              "value": "2"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(50, 172, 45, 0.97)",
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(245, 54, 54, 0.9)"
+          ],
+          "datasource": "${DS_INFLUX}",
+          "decimals": 0,
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "40px",
+          "id": 7,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 3,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_value",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"snmp_value\" WHERE \"host\" = 'my.erl' AND \"type\" = 'gauge' AND \"type_instance\" = 'eth1' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "gauge"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth1"
+                }
+              ]
+            }
+          ],
+          "thresholds": "2",
+          "title": "ETH1 - Internet",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "UP",
+              "value": "1"
+            },
+            {
+              "op": "=",
+              "text": "DOWN",
+              "value": "2"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(50, 172, 45, 0.97)",
+            "rgba(245, 54, 54, 0.89)",
+            "rgba(245, 54, 54, 0.89)"
+          ],
+          "datasource": "${DS_INFLUX}",
+          "decimals": 0,
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "40px",
+          "hideTimeOverride": false,
+          "id": 9,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "minSpan": null,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 3,
+          "sparkline": {
+            "fillColor": "rgba(255, 241, 0, 0.18)",
+            "full": false,
+            "lineColor": "rgb(245, 255, 0)",
+            "show": false
+          },
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "10s"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_value",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"snmp_value\" WHERE \"host\" = 'my.erl' AND \"type\" = 'gauge' AND \"type_instance\" = 'eth2' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "gauge"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth2"
+                }
+              ]
+            }
+          ],
+          "thresholds": "2",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "ETH2 - DMZ",
+          "transparent": false,
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "UP",
+              "value": "1"
+            },
+            {
+              "op": "=",
+              "text": "DOWN",
+              "value": "2"
+            }
+          ],
+          "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": true,
+          "colorValue": false,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "${DS_INFLUX}",
+          "decimals": 0,
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "height": "40px",
+          "id": 19,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 3,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_value",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "gauge"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "vtun1"
+                }
+              ]
+            }
+          ],
+          "thresholds": "0,1",
+          "title": "VTUN1 - OVH VPN",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "UP",
+              "value": "1"
+            },
+            {
+              "op": "=",
+              "text": "DOWN",
+              "value": "2"
+            }
+          ],
+          "valueName": "avg"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "New row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": "200px",
+      "panels": [
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 6,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_rx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_octets' AND \"type_instance\" = 'eth0' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_octets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth0"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_tx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_octets' AND \"type_instance\" = 'eth0' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_octets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth0"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Lan [eth0]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bps",
+              "label": "bits/s",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 10,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT  8 * derivative(mean(\"value\"),1s) AS value FROM \"snmp_rx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_octets' AND \"type_instance\" = 'eth0' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_octets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth0"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT  8 * derivative(mean(\"value\"),1s) AS value FROM \"snmp_tx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_octets' AND \"type_instance\" = 'eth1' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_octets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth1"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Internet [eth1]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bps",
+              "label": "bits/s",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 11,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) as \"value\" FROM \"snmp_rx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_octets' AND \"type_instance\" = 'eth2' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_octets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth2"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_tx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_octets' AND \"type_instance\" = 'eth2' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_octets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth2"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "DMZ [eth2]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bps",
+              "label": "bits/s",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 20,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_rx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_octets' AND \"type_instance\" = 'vtun1' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_octets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "vtun1"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_tx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_octets' AND \"type_instance\" = 'vtun1' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_octets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "vtun1"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "VPN [vtun1]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bps",
+              "label": "bits/s",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "New row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": "200px",
+      "panels": [
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 12,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_rx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_packets' AND \"type_instance\" = 'eth0' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_packets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth0"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_tx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_packets' AND \"type_instance\" = 'eth0' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_packets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth0"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "pps [eth0]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "pps",
+              "label": "packets/s",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 13,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_rx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_packets' AND \"type_instance\" = 'eth1' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_packets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth1"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_tx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_packets' AND \"type_instance\" = 'eth1' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_packets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth1"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "pps [eth1]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "pps",
+              "label": "packets/s",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 14,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_rx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_packets' AND \"type_instance\" = 'eth2' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_packets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth2"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_tx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_packets' AND \"type_instance\" = 'eth2' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_packets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth2"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "pps [eth2]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "pps",
+              "label": "packets/s",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "id": 21,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_rx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_packets' AND \"type_instance\" = 'vtun1' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_packets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "vtun1"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT 8 * derivative(mean(\"value\"),1s) AS \"value\" FROM \"snmp_tx\" WHERE \"host\" = 'my.erl' AND \"type\" = 'if_packets' AND \"type_instance\" = 'vtun1' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  },
+                  {
+                    "params": [
+                      "10s"
+                    ],
+                    "type": "non_negative_derivative"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_packets"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "vtun1"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "pps [vtun1]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "pps",
+              "label": "packets/s",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "New row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": "100px",
+      "panels": [
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "height": "135px",
+          "id": 16,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_errors"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth0"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_errors"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth0"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Errors [eth0]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "height": "135px",
+          "id": 17,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.if_errors-eth1.rx\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_errors"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth1"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.if_errors-eth1.rx\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_errors"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth1"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Errors [eth1]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "height": "135px",
+          "id": 18,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.if_errors-eth2.rx\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_errors"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth2"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.if_errors-eth2.rx\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_errors"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "eth2"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Errors [eth2]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {
+            "Rx": "#0A437C",
+            "Tx": "#64B0C8"
+          },
+          "bars": false,
+          "datasource": "${DS_INFLUX}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "grid": {},
+          "height": "135px",
+          "id": 22,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 3,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Rx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_rx",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.if_errors-eth2.rx\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_errors"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "vtun1"
+                }
+              ]
+            },
+            {
+              "alias": "Tx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp_tx",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"servers.router-edge01_home.snmp.if_errors-eth2.rx\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "host",
+                  "operator": "=",
+                  "value": "my.erl"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type",
+                  "operator": "=",
+                  "value": "if_errors"
+                },
+                {
+                  "condition": "AND",
+                  "key": "type_instance",
+                  "operator": "=",
+                  "value": "vtun1"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Errors [vtun1]",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "New row",
+      "titleSize": "h6"
+    }
+  ],
+  "schemaVersion": 14,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "EdgeRouter",
+  "version": 7
+}
